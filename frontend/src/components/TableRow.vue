@@ -12,8 +12,4 @@
 import { defineProps } from 'vue';
 const props = defineProps(['user'])
 
-
-
-
-
 </script>
