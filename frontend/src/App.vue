@@ -8,9 +8,13 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import SendingForm from './components/SendingForm.vue';
 import DataTable from './components/DataTable.vue';
 
+onMounted(() => {
+  console.log('mounted')
+})
 
 </script>
 
