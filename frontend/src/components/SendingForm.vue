@@ -1,9 +1,10 @@
 <template>
   <div class="flex justify-center">
-    <form @submit.prevent>
+    <form @submit.prevent="sendData">
     <div>
       <input
         type="text"
+        v-model="userName"
         placeholder="Type your name"
         class="input input-bordered w-full max-w-xs"
       />
@@ -11,11 +12,11 @@
     <div class="mt-2">
       <label class="label cursor-pointer">
         <span class="label-text mr-2">Agree to send my data to the 3rd party API</span>
-        <input type="checkbox" checked="checked" class="checkbox" />
+        <input type="checkbox" :checked="agreeToSend" class="checkbox" />
       </label>
     </div>
     <div class="mt-2">
-      <button type="submit" class="btn">Send</button>
+      <button :disabled="!agreeToSend && userName.length === 0"  type="submit" class="btn">Send</button>
     </div>
   
   </form>
@@ -23,7 +24,20 @@
 
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from 'vue';
+import axios from 'axios';
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="scss"></style>
+const userName  = ref<string>('');
+const agreeToSend = ref<boolean>(false);
+
+const sendData = async () => {
+  const response = await axios.get('http://localhost:3000/', {
+    params: {
+      name: userName.value
+    }
+  });
+  console.log(response);
+}
+</script>
+
