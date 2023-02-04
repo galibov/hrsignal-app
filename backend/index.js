@@ -30,9 +30,11 @@ app.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const gender = yield (yield axios_1.default.get(urls[1] + name)).data;
         const nationality = yield (yield axios_1.default.get(urls[2] + name)).data;
         res.json({
+            name: name,
             age: age.age,
             gender: gender.gender,
             nationality: (_a = nationality.country[0]) === null || _a === void 0 ? void 0 : _a.country_id,
+            dateSent: new Date().toLocaleString(),
         });
     }
     catch (error) {

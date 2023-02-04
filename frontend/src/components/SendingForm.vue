@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-center">
+  <div class="flex justify-center mt-4">
     <form @submit.prevent="sendData">
     <div>
       <input
@@ -27,17 +27,22 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import axios from 'axios';
-
+import { useUsersDataStore } from '../store/usersData';
 const userName  = ref<string>('');
 const agreeToSend = ref<boolean>(false);
-
+const usersData = useUsersDataStore();
 const sendData = async () => {
-  const response = await axios.get('http://localhost:3000/', {
-    params: {
-      name: userName.value
-    }
-  });
-  console.log(response);
+  try {
+    const response = await axios.get('http://localhost:3000/', {
+      params: {
+        name: userName.value
+      }
+    });
+    usersData.addUser(response.data);
+  } catch (error) {
+    console.log(error);
+  }
+
 }
 </script>
 

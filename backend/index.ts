@@ -16,9 +16,11 @@ app.get('/', async (req: Request, res: Response) => {
     const gender = await (await axios.get(urls[1] + name)).data;
     const nationality = await (await axios.get(urls[2] + name)).data;
     res.json({
+      name: name,
       age: age.age,
       gender: gender.gender,
       nationality: nationality.country[0]?.country_id,
+      dateSent: new Date().toLocaleString(),
     })
   } catch (error) {
     res.json(error);
